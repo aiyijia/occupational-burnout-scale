@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>职业倦怠量表</title>
+    <style>
+        body { 
+            font-family: 'Microsoft YaHei', sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 { color: #2c3e50; text-align: center; }
+        .question { 
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+        .options { margin-left: 15px; }
+        .options label { 
+            display: block;
+            margin: 8px 0;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .options label:hover { background-color: #e8f4fc; }
+        button { 
+            display: block;
+            margin: 30px auto;
+            padding: 12px 30px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #2980b9; }
+        #result { 
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>职业倦怠量表测试</h1>
+    <form id="burnoutForm">
+        <div class="question">
+            <p>1. 工作让我感觉身心俱疲</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="1" required> 从不</label>
+                <label><input type="radio" name="q1" value="2"> 很少</label>
+                <label><input type="radio" name="q1" value="3"> 有时</label>
+                <label><input type="radio" name="q1" value="4"> 经常</label>
+                <label><input type="radio" name="q1" value="5"> 总是</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>2. 下班后我感觉精疲力尽</p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="1" required> 从不</label>
+                <label><input type="radio" name="q2" value="2"> 很少</label>
+                <label><input type="radio" name="q2" value="3"> 有时</label>
+                <label><input type="radio" name="q2" value="4"> 经常</label>
+                <label><input type="radio" name="q2" value="5"> 总是</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>3. 早晨起床想到要工作就感到疲惫</p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="1" required> 从不</label>
+                <label><input type="radio" name="q3" value="2"> 很少</label>
+                <label><input type="radio" name="q3" value="3"> 有时</label>
+                <label><input type="radio" name="q3" value="4"> 经常</label>
+                <label><input type="radio" name="q3" value="5"> 总是</label>
+            </div>
+        </div>
+        
+        <button type="button" onclick="calculateScore()">提交测试</button>
+    </form>
+    
+    <div id="result"></div>
+    
+    <script>
+        function calculateScore() {
+            // 检查所有问题是否已回答
+            const unanswered = document.querySelectorAll('input[type="radio"]:not(:checked)');
+            const requiredInputs = document.querySelectorAll('input[required]');
+            let allAnswered = true;
+            
+            requiredInputs.forEach(input => {
+                const name = input.getAttribute('name');
+                if(!document.querySelector(`input[name="${name}"]:checked`)) {
+                    allAnswered = false;
+                }
+            });
+            
+            if(!allAnswered) {
+                alert("请回答所有问题后再提交");
+                return;
+            }
+            
+            // 计算总分
+            let score = 0;
+            const questions = document.querySelectorAll('input[type="radio"]:checked');
+            
+            questions.forEach(q => {
+                score += parseInt(q.value);
+            });
+            
+            // 显示结果
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            
+            let resultText = `<h2>您的测试结果</h2>`;
+            resultText += `<p>总分: ${score}分（满分15分）</p>`;
+            
+            if(score <= 5) {
+                resultText += "<p>职业倦怠程度: <strong>低</strong></p>";
+                resultText += "<p>说明：您目前的工作状态良好，倦怠感较低。</p>";
+            } else if(score <= 10) {
+                resultText += "<p>职业倦怠程度: <strong>中等</strong></p>";
+                resultText += "<p>说明：您已经出现一定程度的职业倦怠，需要注意调节。</p>";
+            } else {
+                resultText += "<p>职业倦怠程度: <strong>高</strong></p>";
+                resultText += "<p>说明：您有明显的职业倦怠症状，建议寻求专业帮助或调整工作状态。</p>";
+            }
+            
+            resultDiv.innerHTML = resultText;
+            
+            // 滚动到结果位置
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
