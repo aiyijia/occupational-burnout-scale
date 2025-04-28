@@ -121,6 +121,40 @@
     </div>
   </div>
 
+<!-- 婚姻状况 -->
+<div class="form-group">
+  <label>婚姻状况：</label>
+  <div class="radio-group">
+    <label><input type="radio" name="marriage" value="未婚" required> 未婚</label>
+    <label><input type="radio" name="marriage" value="已婚"> 已婚</label>
+    <label><input type="radio" name="marriage" value="离异"> 离异</label>
+    <label><input type="radio" name="marriage" value="再婚"> 再婚</label>
+    <label><input type="radio" name="marriage" value="丧偶"> 丧偶</label>
+  </div>
+</div>
+
+<!-- 家庭结构（带说明提示） -->
+<div class="form-group">
+  <label>家庭结构：</label>
+  <select name="familyType" required 
+          title="请根据实际情况选择最符合的家庭类型"
+          data-help="family-help">
+    <option value="">请选择...</option>
+    <option value="核心家庭">核心家庭</option>
+    <option value="主干家庭">主干家庭</option>
+    <option value="单亲家庭">单亲家庭</option>
+    <option value="联合家庭">联合家庭</option>
+    <option value="隔代家庭">隔代家庭</option>
+  </select>
+  <div id="family-help" class="help-tooltip">
+    <div class="help-item" data-for="核心家庭">两代或以上夫妻组成，每代最多一对夫妻</div>
+    <div class="help-item" data-for="主干家庭">多代同堂（含父母、已婚子女、孙辈等）</div>
+    <div class="help-item" data-for="单亲家庭">单身父母与子女组成的家庭</div>
+    <div class="help-item" data-for="联合家庭">多对已婚同辈联合组成的家庭</div>
+    <div class="help-item" data-for="隔代家庭">祖父母与孙辈共同生活（父母缺位）</div>
+  </div>
+</div>
+  
   <div class="form-group">
     <label>联系电话：</label>
     <input type="tel" name="phone" required
